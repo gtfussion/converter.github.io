@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.block-gap {
+  margin: 30px 0;
+}
+.title {
+  color: #000000e6;
+  font-size: 36px;
+  font-weight: 600;
+}
+.sub-title {
+  color: #00000080;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.card {
+  box-shadow: 0 16px 24px 2px rgb(0 0 0 / 5%), 0 6px 30px 5px rgb(0 0 0 / 5%),
+    0 8px 10px -5px rgb(0 0 0 / 10%);
+  padding: 36px;
+  border-radius: 8px;
+}
+
+.converter-form-section {
+  display: flex;
+  align-items: flex-end;
+  .icon {
+    font-size: 26px;
+    padding: 5px 16px;
+    color: #00000080;
+  }
+}
+
+.bottom-block {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 15px;
+  font-size: 16px;
+  color: #00000080;
+  span {
+    font-weight: 300;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+}
+
+.connect-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  box-shadow: none;
+  padding: 6px 15px;
+  &:hover {
+    box-shadow: none;
+  }
+}
+.wallet-table{
+  padding: 0 15px 15px 15px;
+}
