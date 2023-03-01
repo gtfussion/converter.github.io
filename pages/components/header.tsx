@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { useMetaMask } from "metamask-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FiChevronDown, FiLogOut } from "react-icons/fi";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -70,6 +70,7 @@ const Header = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const [disconnect, setDisconnect] = useState<boolean>(false);
   const [balance, setBalance] = React.useState<string>("");
   const { connect, account: address, chainId, ethereum } = useMetaMask();
 
@@ -83,6 +84,7 @@ const Header = () => {
 
   const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
     if (address) {
+      setDisconnect(false);
       handleOpenUserMenu(event);
       return;
     }
@@ -100,6 +102,7 @@ const Header = () => {
   const onDisconnect = () => {
     handleCloseUserMenu();
     console.log(window.ethereum);
+    setDisconnect(true);
     // if (window.ethereum && window.ethereum.disconnect) {
     //   window.etherum.disconnect();
     // }
@@ -114,17 +117,21 @@ const Header = () => {
           method: "eth_accounts",
         });
         const address = accounts[0];
-        // Get the balance of the current account
-        const weiBalance = await web3.eth.getBalance(address);
-        const ethBalance = web3.utils.fromWei(weiBalance, "ether");
+        if (address) {
+          // Get the balance of the current account
 
-        // Set the balance in state
-        setBalance(ethBalance);
+          const weiBalance = await web3.eth.getBalance(address);
+          const ethBalance = web3.utils.fromWei(weiBalance, "ether");
+          console.log(ethBalance);
+          // Set the balance in state
+          setBalance(ethBalance);
+        }
       }
     }
 
     getBalance();
   }, []);
+  const showDetails = address && !disconnect;
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -152,13 +159,13 @@ const Header = () => {
             <Grid item xs={3}>
               <Box sx={{ flexGrow: 0 }}>
                 <ConnectButton
-                  startIcon={address && <FiLogOut />}
-                  endIcon={address && <FiChevronDown />}
+                  startIcon={showDetails && <FiLogOut />}
+                  endIcon={showDetails && <FiChevronDown />}
                   variant="contained"
                   aria-label="Connect to Metamask"
                   onClick={handleButtonClick}
                 >
-                  {address ? (
+                  {showDetails ? (
                     <EllipsisTypography variant="body1">
                       {address}
                     </EllipsisTypography>
@@ -179,7 +186,7 @@ const Header = () => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  open={Boolean(anchorElUser)}
+                  open={Boolean(anchorElUser && showDetails)}
                   onClose={handleCloseUserMenu}
                 >
                   <TableContainer className="wallet-table" component={Paper}>
