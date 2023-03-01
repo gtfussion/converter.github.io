@@ -43,12 +43,12 @@ function createData(key: string, value: string) {
 const ConnectButton = styled(Button)({
   width: 200,
   borderRadius: 22,
-  background: "#68a3dd",
+  background: "#2d8be7",
 });
 const DisconnectButton = styled(Button)({
   width: 200,
   borderRadius: 22,
-  background: "#68a3dd",
+  background: "#2d8be7",
   color: "#fff",
   "&:hover": {
     backgroundColor: "#303f9f",
