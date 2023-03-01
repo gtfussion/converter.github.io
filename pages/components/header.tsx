@@ -41,10 +41,18 @@ function createData(key: string, value: string) {
 }
 
 const ConnectButton = styled(Button)({
-  maxWidth: 200,
+  width: 200,
+  borderRadius: 22,
+  background: "#68a3dd",
 });
 const DisconnectButton = styled(Button)({
-  maxWidth: 200,
+  width: 200,
+  borderRadius: 22,
+  background: "#68a3dd",
+  color: "#fff",
+  "&:hover": {
+    backgroundColor: "#303f9f",
+  },
 });
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -133,7 +141,7 @@ const Header = () => {
   }, []);
   const showDetails = address && !disconnect;
   return (
-    <AppBar position="static">
+    <AppBar className="header" position="static">
       <Container maxWidth="xl">
         <Toolbar>
           <Grid container spacing={12}>
