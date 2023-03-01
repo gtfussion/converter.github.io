@@ -39,6 +39,10 @@ const EllipsisTypography = styled(Typography)({
 function createData(key: string, value: string) {
   return { key, value };
 }
+const StyledAppBar = styled(AppBar)({
+  backgroundColor: " #f9f9f9",
+  color: "#0a0a0a",
+});
 
 const ConnectButton = styled(Button)({
   width: 200,
@@ -141,7 +145,7 @@ const Header = () => {
   }, []);
   const showDetails = address && !disconnect;
   return (
-    <AppBar className="header" position="static">
+    <StyledAppBar className="header" position="static">
       <Container maxWidth="xl">
         <Toolbar>
           <Grid container spacing={12}>
@@ -249,7 +253,7 @@ const Header = () => {
           </Grid>
         </Toolbar>
       </Container>
-    </AppBar>
+    </StyledAppBar>
   );
 };
 export default Header;
