@@ -71,7 +71,7 @@ const Header = () => {
     null
   );
   const [disconnect, setDisconnect] = useState<boolean>(false);
-  const [balance, setBalance] = React.useState<string>("");
+  const [balance, setBalance] = React.useState<string>("0");
   const { connect, account: address, chainId, ethereum } = useMetaMask();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
