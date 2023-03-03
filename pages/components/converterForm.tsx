@@ -24,6 +24,10 @@ const ConverterForm = (): JSX.Element => {
 
     if (testValue(newValue)) {
       setNEP(newValue);
+      if (isNaN(parseFloat(newValue))) {
+        setBUSD("");
+        return;
+      }
       setBUSD((parseFloat(newValue) * 3).toFixed(2));
     }
   };
@@ -32,9 +36,11 @@ const ConverterForm = (): JSX.Element => {
     let newValue = e.target.value;
 
     if (testValue(newValue)) {
-      setNEP(newValue);
-      setBUSD((parseFloat(newValue) * 3).toFixed(2));
       setBUSD(newValue);
+      if (isNaN(parseFloat(newValue))) {
+        setBUSD("");
+        return;
+      }
       setNEP((parseFloat(newValue) * 3).toFixed(2));
     }
   };
@@ -55,7 +61,7 @@ const ConverterForm = (): JSX.Element => {
                 </InputAdornment>
               ),
             }}
-            value={isNaN(NEP) ? "" : NEP}
+            value={NEP}
             onChange={onNEPChange}
           />
         </FormControl>
@@ -72,7 +78,7 @@ const ConverterForm = (): JSX.Element => {
                 </InputAdornment>
               ),
             }}
-            value={isNaN(NEP) ? "" : BUSD}
+            value={BUSD}
             onChange={onBUSDChange}
           />
         </FormControl>
