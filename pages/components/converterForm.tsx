@@ -12,20 +12,31 @@ import { FiArrowRight } from "react-icons/fi";
 
 const CONVERT_CONST = 3;
 
+const regex = /^\d*\.?\d{0,2}$/;
 const ConverterForm = (): JSX.Element => {
-  const [NEP, setNEP] = useState<number>(1);
-  const [BUSD, setBUSD] = useState<number>(3);
+  const [NEP, setNEP] = useState<string>("");
+  const [BUSD, setBUSD] = useState<string>("");
+
+  const testValue = (value: string): boolean => regex.test(value);
 
   const onNEPChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let value = parseFloat(e.target.value) ?? 1;
-    setNEP(parseFloat(value.toFixed(2)));
-    setBUSD(parseFloat((value * CONVERT_CONST).toFixed(2)));
+    let newValue = e.target.value;
+
+    if (testValue(newValue)) {
+      setNEP(newValue);
+      setBUSD((parseFloat(newValue) * 3).toFixed(2));
+    }
   };
 
   const onBUSDChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let value = parseFloat(e.target.value) ?? 1;
-    setBUSD(parseFloat(value.toFixed(2)));
-    setNEP(parseFloat((value / CONVERT_CONST).toFixed(2)));
+    let newValue = e.target.value;
+
+    if (testValue(newValue)) {
+      setNEP(newValue);
+      setBUSD((parseFloat(newValue) * 3).toFixed(2));
+      setBUSD(newValue);
+      setNEP((parseFloat(newValue) * 3).toFixed(2));
+    }
   };
 
   return (
