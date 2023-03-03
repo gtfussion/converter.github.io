@@ -41,7 +41,7 @@ const ConverterForm = (): JSX.Element => {
         setBUSD("");
         return;
       }
-      setNEP((parseFloat(newValue) * 3).toFixed(2));
+      setNEP((parseFloat(newValue) / 3).toFixed(2));
     }
   };
 
