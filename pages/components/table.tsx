@@ -27,7 +27,7 @@ export const HeaderTable = (props: TableProps): JSX.Element => {
           </TableRow>
           <TableRow>
             {column.map((tableHead) => (
-              <StyledTableCell>{tableHead}</StyledTableCell>
+              <StyledTableCell key={tableHead}>{tableHead}</StyledTableCell>
             ))}
           </TableRow>
         </TableHead>
