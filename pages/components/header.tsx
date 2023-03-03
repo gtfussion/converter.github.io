@@ -9,13 +9,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/system";
 import { useMetaMask } from "metamask-react";
 import React, { useEffect, useState } from "react";
 import { FiChevronDown, FiLogOut } from "react-icons/fi";
-import { HeaderTable } from "./table";
+import HeaderTable from "./table";
 declare global {
   interface Window {
     ethereum?: any;

@@ -13,8 +13,7 @@ type TableProps = {
   column: string[];
   rows: MenuItem[];
 };
-
-export const HeaderTable = (props: TableProps): JSX.Element => {
+const HeaderTable = (props: TableProps): JSX.Element => {
   const { rows, column } = props;
   return (
     <TableContainer className="wallet-table" component={Paper}>
@@ -50,3 +49,4 @@ export const HeaderTable = (props: TableProps): JSX.Element => {
     </TableContainer>
   );
 };
+export default HeaderTable;
