@@ -59,8 +59,9 @@ const Header = (): JSX.Element => {
     null
   );
   const [disconnect, setDisconnect] = useState<boolean>(false);
+  const [updatedChainId, setUpdatedChainId] = useState<string>("");
   const [balance, setBalance] = React.useState<string>("0");
-  const { connect, account: address, chainId, ethereum } = useMetaMask();
+  const { connect, account: address, chainId } = useMetaMask();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -80,7 +81,10 @@ const Header = (): JSX.Element => {
   };
 
   const rows = [
-    createData("ChainId", chainId ? parseInt(chainId, 16).toString() : ""),
+    createData(
+      "ChainId",
+      updatedChainId ? parseInt(updatedChainId, 16).toString() : ""
+    ),
     createData("WalletAddress", address ?? ""),
     createData("Balance", balance ?? ""),
   ];
@@ -97,10 +101,20 @@ const Header = (): JSX.Element => {
     }
 
     getETHBalance();
-  }, [address, disconnect]);
+  }, [address, disconnect, updatedChainId]);
 
+  useEffect(() => {
+    if (chainId) setUpdatedChainId(chainId);
+  }, [chainId]);
+
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on("chainChanged", (chainId: any) => {
+        setUpdatedChainId(chainId);
+      });
+    }
+  }, []);
   const showDetails = address && !disconnect;
-
   return (
     <StyledAppBar className="header" position="static">
       <Container maxWidth="xl">
