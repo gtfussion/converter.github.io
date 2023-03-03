@@ -1,3 +1,4 @@
+import { getBalance } from "@/utils/web3";
 import {
   AppBar,
   Box,
@@ -5,38 +6,34 @@ import {
   Container,
   Grid,
   Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/system";
 import { useMetaMask } from "metamask-react";
 import React, { useEffect, useState } from "react";
 import { FiChevronDown, FiLogOut } from "react-icons/fi";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Web3 from "web3";
+import { HeaderTable } from "./table";
 declare global {
   interface Window {
     ethereum?: any;
   }
 }
-export type MenuItem = {
-  label: string;
-  value: string | null;
-};
+
 const EllipsisTypography = styled(Typography)({
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
 });
 
-function createData(key: string, value: string) {
+export type MenuItem = {
+  key: string;
+  value: string | null;
+};
+
+function createData(key: string, value: string): MenuItem {
   return { key, value };
 }
 const StyledAppBar = styled(AppBar)({
@@ -59,26 +56,7 @@ const DisconnectButton = styled(Button)({
   },
 });
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#000",
-    color: "#ffff",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: "#f5f5f5",
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-const Header = () => {
+const Header = (): JSX.Element => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
@@ -102,48 +80,29 @@ const Header = () => {
     }
     connect();
   };
+
   const rows = [
     createData("ChainId", chainId ? parseInt(chainId, 16).toString() : ""),
     createData("WalletAddress", address ?? ""),
     createData("Balance", balance ?? ""),
   ];
-  // const rows: MenuItem[] = [
-  //   { "ChainId",  parseInt(chainId, 16).toString() },
-  //   { label: "WalletAddress", value: address },
-  // ];
+
   const onDisconnect = () => {
     handleCloseUserMenu();
-    console.log(window.ethereum);
     setDisconnect(true);
-    // if (window.ethereum && window.ethereum.disconnect) {
-    //   window.etherum.disconnect();
-    // }
   };
-  useEffect(() => {
-    async function getBalance() {
-      if (window.ethereum) {
-        // Create a new web3 instance using the Metamask provider
-        const web3 = new Web3(window.ethereum);
-        // Get the current account's address
-        const accounts = await window.ethereum.request({
-          method: "eth_accounts",
-        });
-        const address = accounts[0];
-        if (address) {
-          // Get the balance of the current account
 
-          const weiBalance = await web3.eth.getBalance(address);
-          const ethBalance = web3.utils.fromWei(weiBalance, "ether");
-          console.log(ethBalance);
-          // Set the balance in state
-          setBalance(ethBalance);
-        }
-      }
+  useEffect(() => {
+    async function getETHBalance() {
+      const ethBalance = await getBalance();
+      setBalance(ethBalance);
     }
 
-    getBalance();
+    getETHBalance();
   }, []);
+
   const showDetails = address && !disconnect;
+
   return (
     <StyledAppBar className="header" position="static">
       <Container maxWidth="xl">
@@ -201,39 +160,7 @@ const Header = () => {
                   open={Boolean(anchorElUser && showDetails)}
                   onClose={handleCloseUserMenu}
                 >
-                  <TableContainer className="wallet-table" component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell align="center" colSpan={3}>
-                            Wallet Details
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <StyledTableCell>Key</StyledTableCell>
-                          <StyledTableCell align="right">Value</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row, index) => (
-                          <StyledTableRow
-                            key={row.value || "" + index}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <StyledTableCell component="th" scope="row">
-                              {row.key}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">
-                              {row.value}
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-
+                  <HeaderTable rows={rows} column={["Key", "Value"]} />
                   <Box
                     display="flex"
                     alignItems="center"

@@ -12,7 +12,7 @@ import { FiArrowRight } from "react-icons/fi";
 
 const CONVERT_CONST = 3;
 
-const ConverterForm = () => {
+const ConverterForm = (): JSX.Element => {
   const [NEP, setNEP] = useState<number>(1);
   const [BUSD, setBUSD] = useState<number>(3);
 

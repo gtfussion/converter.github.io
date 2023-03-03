@@ -1,5 +1,4 @@
 import styles from "@/styles/Home.module.css";
-import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import Head from "next/head";
 import ConverterForm from "./components/converterForm";
