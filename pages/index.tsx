@@ -22,7 +22,7 @@ export default function Home() {
           </div>
           <ConverterForm />
           <p className="bottom-block">
-            <span> As For test </span> 1 BUSD = 3 NEP
+            <span> As for test </span> 1 NEP = 3 BUSD
           </p>
         </Container>
       </main>

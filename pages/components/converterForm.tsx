@@ -19,13 +19,13 @@ const ConverterForm = (): JSX.Element => {
   const onNEPChange = (e: ChangeEvent<HTMLInputElement>) => {
     let value = parseFloat(e.target.value) ?? 1;
     setNEP(parseFloat(value.toFixed(2)));
-    setBUSD(parseFloat((value / CONVERT_CONST).toFixed(2)));
+    setBUSD(parseFloat((value * CONVERT_CONST).toFixed(2)));
   };
 
   const onBUSDChange = (e: ChangeEvent<HTMLInputElement>) => {
     let value = parseFloat(e.target.value) ?? 1;
     setBUSD(parseFloat(value.toFixed(2)));
-    setNEP(parseFloat((value * CONVERT_CONST).toFixed(2)));
+    setNEP(parseFloat((value / CONVERT_CONST).toFixed(2)));
   };
 
   return (
