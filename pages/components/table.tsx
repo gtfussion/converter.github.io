@@ -25,13 +25,13 @@ const HeaderTable = (props: TableProps): JSX.Element => {
             </TableCell>
           </TableRow>
           <TableRow>
-            {column.map((tableHead) => (
+            {column?.map((tableHead) => (
               <StyledTableCell key={tableHead}>{tableHead}</StyledTableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {rows?.map((row, index) => (
             <StyledTableRow
               key={row.key + index}
               sx={{
