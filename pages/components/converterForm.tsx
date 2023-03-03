@@ -38,7 +38,7 @@ const ConverterForm = (): JSX.Element => {
     if (testValue(newValue)) {
       setBUSD(newValue);
       if (isNaN(parseFloat(newValue))) {
-        setBUSD("");
+        setNEP("");
         return;
       }
       setNEP((parseFloat(newValue) / 3).toFixed(2));
