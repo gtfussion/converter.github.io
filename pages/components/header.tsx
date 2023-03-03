@@ -97,7 +97,7 @@ const Header = (): JSX.Element => {
     }
 
     getETHBalance();
-  }, []);
+  }, [address, disconnect]);
 
   const showDetails = address && !disconnect;
 
